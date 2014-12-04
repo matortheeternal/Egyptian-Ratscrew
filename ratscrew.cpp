@@ -14,6 +14,8 @@ using namespace std;
 string suits[] = {"\x03", "\x04", "\x05", "\x06"};
 string vals[] = {"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
 int delays[] = {5000, 2000, 1000, 500, 350};
+bool showReactionTime = true;
+bool showDeckSize = true;
 
 class Card {
   private:
@@ -58,6 +60,9 @@ class Player {
     }
     string getName() {
       return name;
+    }
+    int getDeckSize() {
+      return deck.size();
     }
 };
 
@@ -260,7 +265,11 @@ int main() {
             continue;
           }
           if (p1.hasCards()) {
-            cout << "You play a card: " << endl;
+            if (showDeckSize) {
+              cout << "You play a card (" << p1.getDeckSize() << "): " << endl;
+            } else {
+              cout << "You play a card: " << endl;
+            }
             // player plays the next card
             p1.place_card(stack);
             if (checkPowerCard(stack.front(), pcard, pcounter)) {
@@ -278,7 +287,11 @@ int main() {
             gameover = true;
           }
         } else if (key == ' ') {
-          cout << "SLAP!" << endl;
+          if (showReactionTime) {
+            cout << "SLAP! (" << delay << "ms)" << endl;
+          } else {
+            cout << "SLAP!" << endl;
+          }
           if (isSlap(stack)) {
             slap_delay = delays[difficulty] + (rand() % delays[difficulty]);
             if (slap_delay < delay) {
@@ -307,6 +320,7 @@ int main() {
               pcounter = -1;
               gameover = true;
             }
+            continue;
           }
         } else if (key == 'q') {
           cout << "Quitting game." << endl;
@@ -351,7 +365,11 @@ int main() {
           }
           // not a slap
           if (p2.hasCards()) {
-            cout << "The computer plays a card: " << endl;
+            if (showDeckSize) {
+              cout << "The computer plays a card (" << p2.getDeckSize() << "): " << endl;
+            } else {
+              cout << "The computer plays a card: " << endl;
+            }
             // player plays the next card
             p2.place_card(stack);
             if (checkPowerCard(stack.front(), pcard, pcounter)) {
@@ -369,7 +387,11 @@ int main() {
             gameover = true;
           }
         } else if (key == ' ') {
-          cout << "SLAP!" << endl;
+          if (showReactionTime) {
+            cout << "SLAP! (" << delay << "ms)" << endl;
+          } else {
+            cout << "SLAP!" << endl;
+          }
           if (isSlap(stack)) {
             slap_delay = delays[difficulty] + (rand() % delays[difficulty]);
             if (slap_delay < delay) {
@@ -398,6 +420,7 @@ int main() {
               pcounter = -1;
               gameover = true;
             }
+            continue;
           }
         } else if (key == 'q') {
           cout << "Quitting game." << endl;
